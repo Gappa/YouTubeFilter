@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Nelson\Latte\Filters\YouTubeFilter\DI;
 
@@ -8,7 +9,6 @@ use Nette\DI\Definitions\FactoryDefinition;
 
 final class YouTubeFilterExtension extends CompilerExtension
 {
-
 	public function loadConfiguration(): void
 	{
 		$builder = $this->getContainerBuilder();

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Nelson\Latte\Filters\YouTubeFilter;
 
@@ -10,13 +11,13 @@ class YouTubeFilter
 	use SmartObject;
 
 	/** @var string */
-	const URL_REGEXP = '/^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/';
+	public const URL_REGEXP = '/^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/';
 
 	/** @var string */
-	const URL_EMBED = 'https://www.youtube.com/embed/';
+	public const URL_EMBED = 'https://www.youtube.com/embed/';
 
 	/** @var string */
-	const CSS_CLASS = 'responsive-iframe';
+	public const CSS_CLASS = 'responsive-iframe';
 
 
 	public static function inline(string $url, string $param): ?Html
