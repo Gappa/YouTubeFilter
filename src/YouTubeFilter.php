@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Nelson\Latte\Filters\YouTubeFilter;
 
+use Nelson\Latte\Filters\YouTubeFilter\DI\YouTubeFilterConfig;
 use Nette\SmartObject;
 use Nette\Utils\Html;
 
@@ -17,10 +18,16 @@ class YouTubeFilter
 	public const URL_EMBED = 'https://www.youtube.com/embed/';
 
 	/** @var string */
-	public const CSS_CLASS = 'responsive-iframe';
+	private $cssClass;
 
 
-	public static function inline(string $url, string $param): ?Html
+	public function setup(YouTubeFilterConfig $config): void
+	{
+		$this->cssClass = $config->cssClass;
+	}
+
+
+	public function inline(string $url, string $param): ?Html
 	{
 		/** @var array|false $dims */
 		$dims = explode('x', $param);
@@ -30,7 +37,7 @@ class YouTubeFilter
 
 			if (isset($matches[7])) {
 				return Html::el('div')
-					->setAttribute('class', static::CSS_CLASS)
+					->setAttribute('class', $this->cssClass)
 					->addHtml(
 						Html::el('iframe')
 						->setAttribute('src', static::URL_EMBED . $matches[7] . '?wmode=transparent')
