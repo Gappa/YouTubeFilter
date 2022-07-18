@@ -17,8 +17,7 @@ class YouTubeFilter
 	/** @var string */
 	public const URL_EMBED = 'https://www.youtube.com/embed/';
 
-	/** @var string */
-	private $cssClass;
+	private string $cssClass;
 
 
 	public function setup(YouTubeFilterConfig $config): void
@@ -29,25 +28,29 @@ class YouTubeFilter
 
 	public function inline(string $url, string $param): ?Html
 	{
-		/** @var array|false $dims */
+		/** @var array<int, string>|false $dims */
 		$dims = explode('x', $param);
 
-		if (!empty($url)) {
-			preg_match(static::URL_REGEXP, $url, $matches);
-
-			if (isset($matches[7])) {
-				return Html::el('div')
-					->setAttribute('class', $this->cssClass)
-					->addHtml(
-						Html::el('iframe')
-						->setAttribute('src', static::URL_EMBED . $matches[7] . '?wmode=transparent')
-						->setAttribute('wmode', 'opaque')
-						->setAttribute('width', $dims[0])
-						->setAttribute('height', $dims[1])
-						->setAttribute('frameborder', 0)
-						->setAttribute('allowfullscreen', true)
-					);
-			}
+		if ($dims === false) {
+			return null;
 		}
+
+		preg_match(static::URL_REGEXP, $url, $matches);
+
+		if (!isset($matches[7])) {
+			return null;
+		}
+		
+		return Html::el('div')
+			->setAttribute('class', $this->cssClass)
+			->addHtml(
+				Html::el('iframe')
+				->setAttribute('src', static::URL_EMBED . $matches[7] . '?wmode=transparent')
+				->setAttribute('wmode', 'opaque')
+				->setAttribute('width', $dims[0])
+				->setAttribute('height', $dims[1])
+				->setAttribute('frameborder', 0)
+				->setAttribute('allowfullscreen', true)
+			);
 	}
 }

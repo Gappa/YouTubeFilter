@@ -5,5 +5,5 @@ namespace Nelson\Latte\Filters\YouTubeFilter\DI;
 
 final class YouTubeFilterConfig
 {
-	public $cssClass = 'responsive-iframe';
+	public string $cssClass = 'responsive-iframe';
 }
